@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import streamlit as st
+from io import StringIO
 from dotenv import load_dotenv
 
 from langchain_core.prompts import ChatPromptTemplate
@@ -21,7 +22,7 @@ def get_naver_finance_tables():
     response = requests.get(URL, headers=HEADERS)
     response.encoding = "euc-kr"
 
-    tables = pd.read_html(response.text)
+    tables = pd.read_html(StringIO(response.text))
 
     stock_tables = []
     for table in tables:
